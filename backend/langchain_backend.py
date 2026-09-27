@@ -73,6 +73,6 @@ def llm_chat_with_data(user_prompt: str, table_name: str, history: list):
 
 if __name__ == "__main__":
     prompt = 'Create tables defined in the ddl schema file.'
-    with open('../examples/company_employee_schema.ddl', 'r') as f:
+    with open('examples/company_employee_schema.ddl', 'r') as f:
         file_content = f.read()
     llm_generate(prompt, 'company_employee_schema.ddl', file_content, temperature=0.7, max_tokens=512)

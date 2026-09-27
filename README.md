@@ -1,5 +1,10 @@
 # Conversational AI on Synthetic Data
 
+## How to run the code 
+`Open docker desktop and run postgres`
+`streamlit run app6.py`
+
+
 ## Goal
 Build a conversational AI application with two core capabilities:
 1. Generate realistic synthetic data from SQL schemas.
