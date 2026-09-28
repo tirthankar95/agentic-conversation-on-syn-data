@@ -1,4 +1,7 @@
+from json import load
+
 import streamlit as st
+from dotenv import load_dotenv
 from frontend.chat import apply_chat
 from frontend.side_nav import apply_side_bar
 from frontend.data_gen import apply_data_gen
@@ -6,7 +9,7 @@ from frontend.style import apply_custom_styles
 
 # Configure page to wide layout
 st.set_page_config(layout="wide")
-
+load_dotenv()
 apply_custom_styles(st)
 
 # -----------------------------------------------------------------------------

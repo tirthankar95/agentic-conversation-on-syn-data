@@ -56,6 +56,9 @@ def apply_row1(st):
 
 def apply_row2(st):
     # Row 2: Bottom Element
+    if st.session_state.pop("table_modified", False):
+        st.toast("Table updated. Preview refreshed.", icon="✅")
+
     bottom_row = st.container(border=True)
     with bottom_row:
         header, select_col = st.columns(2)
@@ -69,9 +72,11 @@ def apply_row2(st):
             st.write("#### Data Preview")
         with select_col:
             selected_file = st.selectbox(
-                "",
+                "Choose a table",
                 options=available_files,
                 index=0,
+                key="data_preview_table",
+                label_visibility="collapsed",
                 help="Choose a schema to inspect its generated contents.",
             )
         st.divider()
@@ -84,14 +89,16 @@ def apply_row2(st):
             )
             user_prompt = st.chat_input("Query to modify the table entries...")
             if user_prompt:
-                if llm_chat_with_data(
+                result = llm_chat_with_data(
                     user_prompt=user_prompt,
                     table_name=selected_file,
                     history=[]
-                ):
-                    st.toast("Modification successful.", icon="✅")
+                )
+                if result is True:
+                    st.session_state["table_modified"] = True
+                    st.rerun()
                 else:
-                    st.toast("Try again with more detailed prompt.", icon="❌")
+                    st.error(f"Table modification failed: {result}")
         else:
             st.text("No file selected.")
 
@@ -100,4 +107,3 @@ def apply_row2(st):
 def apply_data_gen(st):
     apply_row1(st)
     apply_row2(st)
-
